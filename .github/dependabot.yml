@@ -1,0 +1,40 @@
+version: 2
+
+registries:
+  laptopclub-packages:
+    type: npm-registry
+    url: https://npm.pkg.github.com
+    token: ${{ secrets.PACKAGES_TOKEN }}
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    registries:
+      - laptopclub-packages
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Europe/London
+    allow:
+      - dependency-name: "@laptopclub/foundation-*"
+    groups:
+      foundation-packages:
+        patterns:
+          - "@laptopclub/foundation-*"
+        update-types:
+          - minor
+          - patch
+    labels:
+      - dependencies
+      - foundation
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    labels:
+      - dependencies
+      - github-actions

@@ -1,0 +1,13 @@
+.git
+.vercel
+node_modules
+.next
+.turbo
+.sanity
+coverage
+dist
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+.DS_Store
