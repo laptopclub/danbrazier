@@ -283,6 +283,28 @@ export type Link = {
   variant?: "primary" | "secondary" | "inverse";
 };
 
+export type Article = {
+  _id: string;
+  _type: "article";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  excerpt?: string;
+  publishedAt?: string;
+  coverImage?: ImageWithAlt;
+  body?: PortableContent;
+  topics?: Array<string>;
+  seo?: Seo;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -382,12 +404,6 @@ export type SanityImageHotspot = {
   y?: number;
   height?: number;
   width?: number;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -504,11 +520,12 @@ export type AllSanitySchemaTypes =
   | ImageWithAlt
   | Seo
   | Link
+  | Article
+  | Slug
   | SiteSettings
   | Page
   | SanityImageCrop
   | SanityImageHotspot
-  | Slug
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions

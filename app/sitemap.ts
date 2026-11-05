@@ -1,4 +1,4 @@
-import { sitemapPagesQuery } from "@laptopclub/foundation-cms/queries";
+import { sitemapArticlesQuery, sitemapPagesQuery } from "@laptopclub/foundation-cms/queries";
 import type { MetadataRoute } from "next";
 import { env } from "../lib/env";
 import { portfolioEntries } from "../lib/portfolio";
@@ -21,9 +21,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
   }
 
-  const pages = await sanityClient.fetch<SitemapPage[]>(sitemapPagesQuery, {}, { perspective: "published", stega: false });
+  const [pages, articles] = await Promise.all([
+    sanityClient.fetch<SitemapPage[]>(sitemapPagesQuery, {}, { perspective: "published", stega: false }),
+    sanityClient.fetch<SitemapPage[]>(sitemapArticlesQuery, {}, { perspective: "published", stega: false })
+  ]);
 
-  return pages.flatMap((page) => {
+  return [
+    { url: new URL("/notes", env.siteUrl).toString() },
+    ...pages.flatMap((page) => {
     if (!page.slug) {
       return [];
     }
@@ -34,5 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: getPageUrl(page.slug)
       }
     ];
-  });
+    }),
+    ...articles.flatMap((article) => article.slug ? [{ lastModified: article._updatedAt ? new Date(article._updatedAt) : undefined, url: new URL(`/notes/${article.slug}`, env.siteUrl).toString() }] : [])
+  ];
 }
