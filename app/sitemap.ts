@@ -1,7 +1,6 @@
 import { sitemapArticlesQuery, sitemapPagesQuery } from "@laptopclub/foundation-cms/queries";
 import type { MetadataRoute } from "next";
 import { env } from "../lib/env";
-import { portfolioEntries } from "../lib/portfolio";
 import { sanityClient } from "../lib/sanity";
 
 type SitemapPage = {
@@ -16,9 +15,7 @@ function getPageUrl(slug: string): string {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (env.sanity.projectId === "placeholder") {
-    return ["/", ...portfolioEntries.map((entry) => `/${entry.slug}`)].map((path) => ({
-      url: new URL(path, env.siteUrl).toString()
-    }));
+    return [{ url: new URL("/", env.siteUrl).toString() }];
   }
 
   const [pages, articles] = await Promise.all([
