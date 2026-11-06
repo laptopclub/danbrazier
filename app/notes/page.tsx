@@ -24,7 +24,7 @@ function formatDate(value?: string): string | undefined {
 }
 
 export default async function NotesPage() {
-  const { data } = await sanityFetch({ perspective: "published", query: articlesQuery, stega: false });
+  const { data } = await sanityFetch({ query: articlesQuery, stega: false });
   const articles = data as ArticleSummary[];
   const imageConfig = { dataset: env.sanity.dataset, projectId: env.sanity.projectId };
 

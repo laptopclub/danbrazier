@@ -33,7 +33,7 @@ async function getLatestArticles(): Promise<ArticleSummary[]> {
     return [];
   }
 
-  const { data } = await sanityFetch({ perspective: "published", query: articlesQuery, stega: false });
+  const { data } = await sanityFetch({ query: articlesQuery, stega: false });
   return (data as ArticleSummary[]).slice(0, 3);
 }
 
