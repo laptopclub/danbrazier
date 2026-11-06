@@ -15,6 +15,16 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type RandomQuoteBlock = {
+  _type: "randomQuoteBlock";
+  staggered?: boolean;
+  quotes?: Array<{
+    text?: string;
+    author?: string;
+    _key: string;
+  }>;
+};
+
 export type RichTextBlock = {
   _type: "richTextBlock";
   eyebrow?: string;
@@ -395,6 +405,9 @@ export type Page = {
     | ({
         _key: string;
       } & RichTextBlock)
+    | ({
+        _key: string;
+      } & RandomQuoteBlock)
   >;
 };
 
@@ -512,6 +525,7 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | RandomQuoteBlock
   | RichTextBlock
   | FaqBlock
   | LogoCloudBlock

@@ -1,7 +1,7 @@
 import { createSchemaTypes } from "@laptopclub/foundation-cms";
+import { randomQuoteBlock } from "./random-quote-block";
 
-// Add site-specific schemas and page block type names here.
 export const siteSchemaTypes = createSchemaTypes({
-  additionalPageBlockTypes: [],
-  additionalTypes: []
+  additionalPageBlockTypes: ["randomQuoteBlock"],
+  additionalTypes: [randomQuoteBlock]
 });
