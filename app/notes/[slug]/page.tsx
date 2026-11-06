@@ -6,6 +6,8 @@ import { env } from "../../../lib/env";
 import { sanityFetch } from "../../../lib/live";
 import { getSiteSettings } from "../../../lib/site";
 
+export const dynamic = "force-dynamic";
+
 type Article = ArticleData & { seo?: { description?: string; noIndex?: boolean; title?: string } };
 
 async function getArticle(slug: string, stega = true): Promise<Article | null> {

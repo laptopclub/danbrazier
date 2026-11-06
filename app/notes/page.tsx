@@ -5,6 +5,7 @@ import Link from "next/link";
 import { env } from "../../lib/env";
 import { sanityFetch } from "../../lib/live";
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { description: "Notes on commerce, technology and rebuilding things carefully.", title: "Notes" };
 
 type ArticleSummary = {

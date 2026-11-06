@@ -7,6 +7,8 @@ import { sanityFetch } from "../lib/live";
 import { portfolioEntries } from "../lib/portfolio";
 import type { PageBySlugQueryResult } from "../lib/sanity-query-types";
 
+export const dynamic = "force-dynamic";
+
 type PageData = NonNullable<PageBySlugQueryResult>;
 
 type ArticleSummary = {
