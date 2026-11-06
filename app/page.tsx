@@ -4,6 +4,7 @@ import Link from "next/link";
 import { siteBlockRegistry } from "../lib/blocks";
 import { env } from "../lib/env";
 import { sanityFetch } from "../lib/live";
+import { sanityClient } from "../lib/sanity";
 import { portfolioEntries } from "../lib/portfolio";
 import type { PageBySlugQueryResult } from "../lib/sanity-query-types";
 
@@ -33,8 +34,7 @@ async function getLatestArticles(): Promise<ArticleSummary[]> {
     return [];
   }
 
-  const { data } = await sanityFetch({ query: articlesQuery, stega: false });
-  return (data as ArticleSummary[]).slice(0, 3);
+  return (await sanityClient.withConfig({ token: env.sanity.readToken, useCdn: false }).fetch<ArticleSummary[]>(articlesQuery)).slice(0, 3);
 }
 
 function LatestArticles({ articles }: { articles: ArticleSummary[] }) {
