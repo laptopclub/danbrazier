@@ -25,6 +25,9 @@ This file captures site-specific rules for AI agents working in this client repo
 - Add site-specific renderers in `lib/blocks.ts` or client components.
 - Upgrade all `@laptopclub/foundation-*` packages together.
 - Do not mutate production Sanity content unless explicitly requested.
+- Before every production Sanity mutation, verify the target project and dataset against this file: `zul5551z / production`. Pass `--project-id zul5551z --dataset production` explicitly to Sanity CLI mutation commands. Do not rely on CLI defaults or fallback values.
+- Before reporting a production content change complete, verify the expected document IDs with an authenticated query against `zul5551z / production`, then smoke-test the rendered route after deployment or revalidation.
+- Before pushing or deploying, verify `git remote get-url origin` is `laptopclub/danbrazier` and Vercel is linked to the `laptopclub/danbrazier` project.
 - Never commit `.env` files, package tokens, Sanity tokens or webhook secrets.
 - Foundation package credentials are distributed from the macOS Keychain using `pnpm sync:package-token` in `laptopclub/foundation`. Do not create or store site-local package tokens.
 - Register this repository in `laptopclub/foundation/docs/consumer-sites.json` before package credential distribution and fleet validation.
