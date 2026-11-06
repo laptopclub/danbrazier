@@ -4,7 +4,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { siteBlockRegistry } from "../lib/blocks";
 import { env } from "../lib/env";
-import { sanityFetch } from "../lib/live";
 import { sanityClient } from "../lib/sanity";
 import type { PageBySlugQueryResult } from "../lib/sanity-query-types";
 
@@ -25,8 +24,7 @@ async function getHomePage(): Promise<PageData | null> {
     return null;
   }
 
-  const { data } = await sanityFetch({ query: homePageQuery });
-  return data as PageBySlugQueryResult;
+  return sanityClient.withConfig({ token: env.sanity.readToken, useCdn: false }).fetch<PageBySlugQueryResult>(homePageQuery);
 }
 
 async function getLatestArticles(): Promise<ArticleSummary[]> {
