@@ -6,6 +6,14 @@ import { sanityFetch } from "./live";
 
 export type SiteSettings = SiteChrome & {
   description?: string;
+  footerHeading?: string;
+  newsletterButtonLabel?: string;
+  newsletterHeading?: string;
+  newsletterPlaceholder?: string;
+  notesDescription?: string;
+  notesHeading?: string;
+  notesLinkLabel?: string;
+  socialHeading?: string;
 };
 
 type QueryNavigationLink = {
@@ -75,6 +83,14 @@ function normalizeSiteSettings(settings: ExtendedSiteSettingsQueryResult): SiteS
     copyrightStartYear: settings.copyrightStartYear ?? undefined,
     description: settings.description ?? fallbackSiteSettings.description,
     footerContact: settings.footerContact ?? undefined,
+    footerHeading: (settings as SiteSettings).footerHeading,
+    newsletterButtonLabel: (settings as SiteSettings).newsletterButtonLabel,
+    newsletterHeading: (settings as SiteSettings).newsletterHeading,
+    newsletterPlaceholder: (settings as SiteSettings).newsletterPlaceholder,
+    notesDescription: (settings as SiteSettings).notesDescription,
+    notesHeading: (settings as SiteSettings).notesHeading,
+    notesLinkLabel: (settings as SiteSettings).notesLinkLabel,
+    socialHeading: (settings as SiteSettings).socialHeading,
     footerMenus: normalizeFooterMenus(settings.footerMenus),
     footerNavigation: normalizeNavigation(settings.footerNavigation),
     footerTagline: settings.footerTagline ?? undefined,

@@ -25,10 +25,12 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const mode = await draftMode();
 
+  const site = await getSiteSettings({ stega: false });
+
   return (
     <html lang="en">
       <body>
-        <SiteShell>{children}</SiteShell>
+        <SiteShell footerHeading={site.footerHeading} newsletterButtonLabel={site.newsletterButtonLabel} newsletterHeading={site.newsletterHeading} newsletterPlaceholder={site.newsletterPlaceholder} socialHeading={site.socialHeading} socialLinks={site.socialLinks}>{children}</SiteShell>
         <SanityLive />
         {mode.isEnabled ? (
           <>

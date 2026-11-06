@@ -315,11 +315,19 @@ export type SiteSettings = {
   description?: string;
   logoText?: string;
   copyrightStartYear?: number;
+  notesHeading?: string;
+  notesDescription?: string;
+  notesLinkLabel?: string;
   primaryNavigation?: Array<
     {
       _key: string;
     } & Link
   >;
+  footerHeading?: string;
+  newsletterHeading?: string;
+  newsletterPlaceholder?: string;
+  newsletterButtonLabel?: string;
+  socialHeading?: string;
   footerTagline?: string;
   footerNavigation?: Array<
     {
