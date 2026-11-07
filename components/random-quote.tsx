@@ -2,7 +2,8 @@ type Quote = { author?: string; text?: string };
 
 type RandomQuoteBlock = { quotes?: Quote[]; staggered?: boolean };
 
-const offsets = ["-28%", "-14%", "14%", "28%", "-20%", "20%"];
+// A restrained offset keeps the quote centred while giving each line a little movement.
+const offsets = ["-12%", "-6%", "6%", "12%", "-9%", "9%"];
 
 function lines(text: string): string[] {
   if (text.includes("\n")) return text.split("\n").map((line) => line.trim()).filter(Boolean);
