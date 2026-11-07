@@ -51,7 +51,7 @@ export function SiteShell({ children, footerHeading = "Get in touch", newsletter
                   placeholder={newsletterPlaceholder}
                   type="email"
                 />
-                <button className="rounded-full bg-white px-6 py-2.5 text-sm font-bold text-neutral-950 transition hover:bg-neutral-300" type="button">
+                <button className="font-button rounded-full bg-white px-6 py-2.5 text-sm font-bold text-neutral-950 transition hover:bg-neutral-300" type="button">
                   {newsletterButtonLabel}
                 </button>
               </form>

@@ -34,6 +34,7 @@ body {
     letter-spacing: -0.045em;
   }
 
+  .font-button,
   .font-quote-attribution {
     font-family: var(--font-pixel);
   }
