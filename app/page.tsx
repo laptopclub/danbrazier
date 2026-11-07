@@ -1,5 +1,5 @@
 import { articlesQuery, homePageQuery } from "@laptopclub/foundation-cms/queries";
-import { BlockRenderer, type PageBlock } from "@laptopclub/foundation-ui";
+import { BlockRenderer } from "@laptopclub/foundation-ui";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { siteBlockRegistry } from "../lib/blocks";
@@ -51,5 +51,10 @@ export default async function HomePage() {
     notFound();
   }
 
-  return <><BlockRenderer blocks={page.blocks as PageBlock[]} imageConfig={{ dataset: env.sanity.dataset, projectId: env.sanity.projectId }} registry={siteBlockRegistry} /><LatestArticles articles={articles} notesHeading={site.notesHeading} notesLinkLabel={site.notesLinkLabel} /></>;
+  const blocks = page.blocks as Array<{ _key?: string; _type: string }>;
+  const quoteBlocks = blocks.filter((block) => block._type === "randomQuoteBlock");
+  const contentBlocks = blocks.filter((block) => block._type !== "randomQuoteBlock");
+  const imageConfig = { dataset: env.sanity.dataset, projectId: env.sanity.projectId };
+
+  return <><BlockRenderer blocks={contentBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /><LatestArticles articles={articles} notesHeading={site.notesHeading} notesLinkLabel={site.notesLinkLabel} /><BlockRenderer blocks={quoteBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /></>;
 }
