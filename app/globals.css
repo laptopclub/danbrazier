@@ -5,7 +5,8 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: Arial, Helvetica, sans-serif;
+  --font-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --font-mono: var(--font-geist-mono), "SFMono-Regular", Consolas, monospace;
   --color-brand-50: 250 250 250;
   --color-brand-100: 245 245 245;
   --color-brand-500: 82 82 82;
@@ -23,12 +24,24 @@ html {
 
 body {
   @apply bg-white text-neutral-800 antialiased;
+  font-family: var(--font-sans);
 }
 
 @layer utilities {
   .font-heading {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
     letter-spacing: -0.045em;
+  }
+
+  .font-heading-mono {
+    font-family: var(--font-mono);
+    letter-spacing: -0.035em;
+  }
+
+  .prose h3,
+  .prose h4 {
+    font-family: var(--font-mono);
+    letter-spacing: -0.035em;
   }
 
   .text-display {
