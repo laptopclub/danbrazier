@@ -21,6 +21,12 @@ const geistSans = localFont({
   variable: "--font-geist-sans"
 });
 
+const geistPixel = localFont({
+  display: "swap",
+  src: "./fonts/geist-pixel-400.ttf",
+  variable: "--font-geist-pixel"
+});
+
 const geistMono = localFont({
   display: "swap",
   src: [
@@ -50,7 +56,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const site = await getSiteSettings({ stega: false });
 
   return (
-    <html className={`${geistSans.variable} ${geistMono.variable}`} lang="en">
+    <html className={`${geistSans.variable} ${geistMono.variable} ${geistPixel.variable}`} lang="en">
       <body>
         <SiteShell footerHeading={site.footerHeading} newsletterButtonLabel={site.newsletterButtonLabel} newsletterHeading={site.newsletterHeading} newsletterPlaceholder={site.newsletterPlaceholder} socialHeading={site.socialHeading} socialLinks={site.socialLinks}>{children}</SiteShell>
         <SanityLive />
