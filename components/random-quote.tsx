@@ -10,9 +10,9 @@ function lines(text: string): string[] {
   const target = Math.min(4, Math.max(2, Math.round(text.length / 22)));
   const limit = Math.ceil(text.length / target);
   return words.reduce<string[]>((result, word) => {
-    const current = result.at(-1) ?? "";
-    if (current && `${current} ${word}`.length > limit) result.push(word);
-    else result[result.length - 1] = current ? `${current} ${word}` : word;
+    const current = result.at(-1);
+    if (!current || `${current} ${word}`.length > limit) result.push(word);
+    else result[result.length - 1] = `${current} ${word}`;
     return result;
   }, []);
 }
