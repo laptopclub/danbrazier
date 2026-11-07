@@ -17,6 +17,7 @@ function socialIconClass(link: { href?: string; label?: string }): string | unde
   const value = `${link.label ?? ""} ${link.href ?? ""}`.toLowerCase();
   if (value.includes("github")) return "bi-github";
   if (value.includes("linkedin")) return "bi-linkedin";
+  if (value.includes("instagram")) return "bi-instagram";
   return undefined;
 }
 
