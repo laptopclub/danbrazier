@@ -33,6 +33,7 @@ This file captures site-specific rules for AI agents working in this client repo
 - Register this repository in `laptopclub/foundation/docs/consumer-sites.json` before package credential distribution and fleet validation.
 - Do not hand-edit generated Sanity type files.
 - Do not add dependencies without explicit approval.
+- Viewport edge blurs must stop at the footer. Keep the footer in a higher stacking context than the bottom blur.
 
 ## Required checks
 
