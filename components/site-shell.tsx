@@ -1,5 +1,17 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+
+const progressiveBlurSteps = [0.078125, 0.15625, 0.3125, 0.625, 1.25, 2.5, 5, 10] as const;
+
+function EdgeBlur({ edge }: { edge: "bottom" | "top" }) {
+  return <div aria-hidden="true" className={edge === "top" ? "pointer-events-none fixed inset-x-0 top-0 z-40 h-28" : "pointer-events-none fixed inset-x-0 bottom-0 z-40 h-28"}><div className="relative size-full">{progressiveBlurSteps.map((blur, index) => {
+    const step = 100 / progressiveBlurSteps.length;
+    const start = index * step;
+    const maskImage = `linear-gradient(${edge === "top" ? "to top" : "to bottom"}, rgba(0,0,0,0) ${start}%, #000 ${(index + 1) * step}%, #000 ${Math.min((index + 2) * step, 100)}%, rgba(0,0,0,0) ${Math.min((index + 3) * step, 100)}%)`;
+    const style = { WebkitBackdropFilter: `blur(${blur}px)`, WebkitMaskImage: maskImage, backdropFilter: `blur(${blur}px)`, maskImage } satisfies CSSProperties;
+    return <div className="pointer-events-none absolute inset-0" key={`${edge}-${blur}`} style={style} />;
+  })}</div></div>;
+}
 
 type SiteShellProps = {
   children: ReactNode;
@@ -14,6 +26,7 @@ type SiteShellProps = {
 export function SiteShell({ children, footerHeading = "Get in touch", newsletterButtonLabel = "Subscribe", newsletterHeading = "Join the mailing list", newsletterPlaceholder = "your@email.com", socialHeading = "Elsewhere", socialLinks = [] }: SiteShellProps) {
   return (
     <div className="flex min-h-screen flex-col">
+      <EdgeBlur edge="top" />
       <main className="flex-1">{children}</main>
       <footer className="mt-24 bg-neutral-950 px-6 py-20 text-white sm:px-10 sm:py-28 lg:px-16">
         <div className="mx-auto max-w-7xl">
@@ -43,6 +56,7 @@ export function SiteShell({ children, footerHeading = "Get in touch", newsletter
           <p className="mt-20 text-xs tracking-wide text-neutral-400">© {new Date().getFullYear()} Dan Brazier</p>
         </div>
       </footer>
+      <EdgeBlur edge="bottom" />
     </div>
   );
 }
