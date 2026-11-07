@@ -18,10 +18,10 @@ function lines(text: string): string[] {
 }
 
 export function RandomQuote({ block }: { block: RandomQuoteBlock }) {
-  const quotes = block.quotes?.filter((quote) => quote.text) ?? [];
+  const quotes = (block.quotes ?? []).map((quote) => ({ quote, lines: lines(quote.text?.trim() ?? "") })).filter(({ lines: quoteLines }) => quoteLines.length);
   if (!quotes.length) return null;
-  const quote = quotes[Math.floor(Math.random() * quotes.length)]!;
-  const quoteLines = lines(quote.text ?? "");
+  const selected = quotes[Math.floor(Math.random() * quotes.length)]!;
+  const { quote, lines: quoteLines } = selected;
 
   return <section className="relative overflow-hidden px-6 py-20 sm:py-28"><span aria-hidden="true" className="absolute left-4 top-0 select-none font-serif text-[18rem] leading-none text-neutral-100 sm:left-10">”</span><div className="relative mx-auto max-w-7xl text-center"><blockquote>{block.staggered !== false ? <div className="text-3xl font-bold leading-tight tracking-tight text-neutral-950 sm:text-5xl">{quoteLines.map((line, index) => <span className="block" key={`${line}-${index}`} style={{ transform: `translateX(${index ? offsets[Math.floor(Math.random() * offsets.length)] : "0%"})` }}>{line}</span>)}</div> : <p className="mx-auto max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-5xl">“{quote.text}”</p>}{quote.author ? <cite className="mt-10 block text-sm font-semibold not-italic text-neutral-500">{quote.author}</cite> : null}</blockquote></div></section>;
 }
