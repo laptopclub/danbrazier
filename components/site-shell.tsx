@@ -13,6 +13,13 @@ function EdgeBlur({ edge }: { edge: "bottom" | "top" }) {
   })}</div></div>;
 }
 
+function socialIconClass(link: { href?: string; label?: string }): string | undefined {
+  const value = `${link.label ?? ""} ${link.href ?? ""}`.toLowerCase();
+  if (value.includes("github")) return "bi-github";
+  if (value.includes("linkedin")) return "bi-linkedin";
+  return undefined;
+}
+
 type SiteShellProps = {
   children: ReactNode;
   footerHeading?: string;
@@ -50,7 +57,11 @@ export function SiteShell({ children, footerHeading = "Get in touch", newsletter
             </div>
             <nav aria-label="Elsewhere" className="flex flex-col gap-3 md:items-end">
               <p className="text-sm font-semibold text-neutral-400">{socialHeading}</p>
-              {socialLinks.map((link) => link.href && link.label ? <Link className="text-lg font-medium text-neutral-300 transition hover:text-white" href={link.href} key={link.href} target={link.openInNewTab ? "_blank" : undefined}>{link.label}</Link> : null)}
+              <div className="flex gap-4">{socialLinks.map((link) => {
+                if (!link.href || !link.label) return null;
+                const iconClass = socialIconClass(link);
+                return <Link aria-label={link.label} className="text-2xl text-neutral-300 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" href={link.href} key={link.href} rel={link.openInNewTab ? "noreferrer" : undefined} target={link.openInNewTab ? "_blank" : undefined}>{iconClass ? <i aria-hidden="true" className={`bi ${iconClass}`} /> : <span className="text-base">{link.label}</span>}</Link>;
+              })}</div>
             </nav>
           </div>
           <p className="mt-20 text-xs tracking-wide text-neutral-400">© {new Date().getFullYear()} Dan Brazier</p>
