@@ -2,6 +2,7 @@ import { articlesQuery, homePageQuery } from "@laptopclub/foundation-cms/queries
 import { BlockRenderer } from "@laptopclub/foundation-ui";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Parallax } from "../components/parallax";
 import { siteBlockRegistry } from "../lib/blocks";
 import { env } from "../lib/env";
 import { sanityClient } from "../lib/sanity";
@@ -41,7 +42,7 @@ function LatestArticles({ articles, notesHeading = "Notes", notesLinkLabel = "Vi
     return null;
   }
 
-  return <section className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16"><h2 className="font-heading text-4xl font-bold tracking-tight text-neutral-950 sm:text-5xl">{notesHeading}</h2><div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{articles.map((article) => article.slug ? <Link className="group rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-neutral-500 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-950" href={`/notes/${article.slug}`} key={article.slug}><h3 className="font-heading-mono mt-2 text-2xl font-bold tracking-tight text-neutral-950 group-hover:text-neutral-600">{article.title}</h3>{article.excerpt ? <p className="mt-3 text-sm leading-6 text-neutral-700">{article.excerpt}</p> : null}</Link> : null)}</div><div className="mt-10 text-center"><Link className="font-button inline-flex rounded-full bg-neutral-950 px-6 py-3 text-sm text-white transition hover:bg-neutral-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-950" href="/notes">{notesLinkLabel}</Link></div></section>;
+  return <section className="relative mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:px-10 sm:py-24 lg:px-16"><Parallax className="pointer-events-none absolute left-1/2 top-0 z-0 -translate-x-1/2 whitespace-nowrap font-heading text-[clamp(7rem,25vw,20rem)] font-bold leading-none tracking-[-0.08em] text-neutral-950 opacity-[0.07]" speed={42}>{notesHeading}</Parallax><div className="relative z-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{articles.map((article) => article.slug ? <Link className="group rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-neutral-500 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-950" href={`/notes/${article.slug}`} key={article.slug}><h3 className="font-heading-mono mt-2 text-2xl font-bold tracking-tight text-neutral-950 group-hover:text-neutral-600">{article.title}</h3>{article.excerpt ? <p className="mt-3 text-sm leading-6 text-neutral-700">{article.excerpt}</p> : null}</Link> : null)}</div><div className="relative z-10 mt-10 text-center"><Link className="font-button inline-flex rounded-full bg-neutral-950 px-6 py-3 text-sm text-white transition hover:bg-neutral-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-950" href="/notes">{notesLinkLabel}</Link></div></section>;
 }
 
 export default async function HomePage() {
