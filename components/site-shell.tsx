@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
-import { PixelHomeLink } from "./pixel-home-link";
 
 const progressiveBlurSteps = [0.078125, 0.15625, 0.3125, 0.625, 1.25, 2.5, 5, 10] as const;
 
@@ -37,7 +36,7 @@ export function SiteShell({ children, footerHeading = "Get in touch", footerTagl
   return (
     <div className="flex min-h-screen flex-col">
       <EdgeBlur edge="top" />
-      <header className="relative z-50 px-6 py-3"><nav aria-label="Site navigation" className="mx-auto max-w-6xl"><PixelHomeLink /></nav></header>
+      <header className="sticky top-0 z-50 bg-transparent px-6 py-3"><nav aria-label="Site navigation" className="mx-auto max-w-6xl"><Link aria-label="Home" className="font-button inline-flex min-h-12 items-center text-base text-neutral-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950" href="/">danbrazier.co.uk</Link></nav></header>
       <main className="flex-1">{children}</main>
       <footer className="relative z-50 mt-24 bg-neutral-950 px-6 py-20 text-white sm:px-10 sm:py-28 lg:px-16">
         <div className="mx-auto max-w-6xl">
