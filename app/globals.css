@@ -31,10 +31,10 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Apply regular weight to site headings, including Foundation block headings. */
+/* Override Foundation's heading weight utilities on site content. */
 main :is(h1, h2, h3, h4, h5, h6),
 footer :is(h1, h2, h3, h4, h5, h6) {
-  font-weight: 400;
+  font-weight: 400 !important;
 }
 
 /* Let the site background show through Foundation's plain sections. */
