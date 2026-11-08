@@ -67,7 +67,7 @@ export function SiteShell({ children, footerHeading = "Get in touch", footerTagl
               })}</div>
             </nav>
           </div>
-          <p className="mt-20 text-xs tracking-wide text-neutral-400">© {new Date().getFullYear()} Dan Brazier</p>
+          <p className="font-button mt-20 text-xs tracking-wide text-neutral-400">© {new Date().getFullYear()} Dan Brazier</p>
         </div>
       </footer>
       <EdgeBlur edge="bottom" />
