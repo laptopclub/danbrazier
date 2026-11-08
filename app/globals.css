@@ -31,6 +31,28 @@ body {
   font-family: var(--font-sans);
 }
 
+.pixel-home-link rect {
+  transition: opacity 180ms ease;
+}
+
+.pixel-home-horns {
+  opacity: 0;
+}
+
+.pixel-home-link:is(:hover, :focus-visible) .pixel-home-house {
+  opacity: 0;
+}
+
+.pixel-home-link:is(:hover, :focus-visible) .pixel-home-horns {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-home-link rect {
+    transition: none;
+  }
+}
+
 /* Override Foundation's heading weights while keeping mono headings regular. */
 main :is(h1, h2, h3, h4, h5, h6),
 footer :is(h1, h2, h3, h4, h5, h6) {
