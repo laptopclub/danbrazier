@@ -25,7 +25,15 @@ html {
 
 body {
   @apply bg-white text-neutral-800 antialiased;
+  /* So White: https://www.toptal.com/designers/subtlepatterns/so-white-pattern/ */
+  background-image: url("/images/so-white.png");
+  background-repeat: repeat;
   font-family: var(--font-sans);
+}
+
+/* Let the site background show through Foundation's plain sections. */
+main section.bg-white {
+  background-color: transparent;
 }
 
 @media (min-width: 1024px) {
