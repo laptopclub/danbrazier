@@ -11,7 +11,7 @@ export function NoteArticle({ article, imageConfig, slug }: { article: ArticleDa
   const date = formatDate(article.publishedAt);
 
   return (
-    <article className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+    <article className="mx-auto max-w-7xl px-6 py-20 sm:px-10 sm:py-28 lg:px-16">
       <div className="grid gap-16 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <header>
           {article.topics?.length ? <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">{article.topics.join(" · ")}</p> : null}
