@@ -5,7 +5,7 @@ export default defineConfig({
   timeout: 30_000,
   use: {
     ...devices["Desktop Chrome"],
-    baseURL: "http://127.0.0.1:3333",
+    baseURL: "http://localhost:3333",
     channel: "chrome",
     trace: "retain-on-failure"
   },
@@ -13,6 +13,6 @@ export default defineConfig({
     command: "pnpm dev",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
-    url: "http://127.0.0.1:3333"
+    url: "http://localhost:3333"
   }
 });
