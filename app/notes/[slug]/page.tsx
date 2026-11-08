@@ -2,6 +2,7 @@ import { allArticleSlugsQuery, articleBySlugQuery } from "@laptopclub/foundation
 import { ArticlePage, type ArticleData } from "@laptopclub/foundation-ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { SelectedNotes } from "../../../components/selected-notes";
 import { env } from "../../../lib/env";
 import { sanityFetch } from "../../../lib/live";
 import { getSiteSettings } from "../../../lib/site";
@@ -27,7 +28,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 export default async function ArticleRoute({ params }: { params: Promise<{ slug: string }> }) {
-  const article = await getArticle((await params).slug);
+  const { slug } = await params;
+  const article = await getArticle(slug);
   if (!article) notFound();
-  return <ArticlePage article={article} imageConfig={{ dataset: env.sanity.dataset, projectId: env.sanity.projectId }} />;
+  return <div className="mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-28 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]"><div className="-mx-6 min-w-0 [&>article>header]:pt-0"><ArticlePage article={article} imageConfig={{ dataset: env.sanity.dataset, projectId: env.sanity.projectId }} /></div><SelectedNotes currentSlug={slug} /></div>;
 }
