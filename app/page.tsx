@@ -57,5 +57,5 @@ export default async function HomePage() {
   const contentBlocks = blocks.filter((block) => block._type !== "randomQuoteBlock");
   const imageConfig = { dataset: env.sanity.dataset, projectId: env.sanity.projectId };
 
-  return <>{contentBlocks.map((block, index) => <div className={block._key === "HeythereImDa" ? "home-intro" : undefined} key={block._key ?? `${block._type}-${index}`}><BlockRenderer blocks={[block]} imageConfig={imageConfig} registry={siteBlockRegistry} /></div>)}<LatestArticles articles={articles} notesHeading={site.notesHeading} notesDescription={site.notesDescription} notesLinkLabel={site.notesLinkLabel} /><BlockRenderer blocks={quoteBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /></>;
+  return <>{contentBlocks.some((block) => block._type === "heroBlock") ? null : <h1 className="sr-only">Dan Brazier</h1>}{contentBlocks.map((block, index) => <div className={block._key === "HeythereImDa" ? "home-intro" : undefined} key={block._key ?? `${block._type}-${index}`}><BlockRenderer blocks={[block]} imageConfig={imageConfig} registry={siteBlockRegistry} /></div>)}<LatestArticles articles={articles} notesHeading={site.notesHeading} notesDescription={site.notesDescription} notesLinkLabel={site.notesLinkLabel} /><BlockRenderer blocks={quoteBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /></>;
 }
