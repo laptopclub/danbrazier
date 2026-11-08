@@ -30,11 +30,11 @@ export default defineConfig({
   ],
   projectId,
   schema: { types: siteSchemaTypes },
-  templates: (templates: Template[]) => templates.filter((template) => template.schemaType !== "siteSettings"),
+  templates: (templates: Template[]) => templates.filter((template) => !["siteSettings", "notesSettings"].includes(template.schemaType)),
   title,
   document: {
     actions: (actions, context) => {
-      if (context.schemaType !== "siteSettings") {
+      if (!["siteSettings", "notesSettings"].includes(context.schemaType)) {
         return actions;
       }
 

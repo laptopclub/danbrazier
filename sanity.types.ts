@@ -15,6 +15,26 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type ArticleReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "article";
+};
+
+export type NotesSettings = {
+  _id: string;
+  _type: "notesSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  featuredArticles?: Array<
+    {
+      _key: string;
+    } & ArticleReference
+  >;
+};
+
 export type RandomQuoteBlock = {
   _type: "randomQuoteBlock";
   staggered?: boolean;
@@ -525,6 +545,8 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | ArticleReference
+  | NotesSettings
   | RandomQuoteBlock
   | RichTextBlock
   | FaqBlock

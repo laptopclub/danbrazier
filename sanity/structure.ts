@@ -13,6 +13,10 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.document().schemaType("siteSettings").documentId("siteSettings"),
         ),
+      S.listItem()
+        .title("Notes settings")
+        .schemaType("notesSettings")
+        .child(S.document().schemaType("notesSettings").documentId("notesSettings")),
       S.divider(),
       S.listItem()
         .title("Homepage")
@@ -34,6 +38,6 @@ export const structure: StructureResolver = (S) =>
             .params({ draftHomePageId, homePageId, type: "page" }),
         ),
       ...S.documentTypeListItems().filter(
-        (item) => !["article", "siteSettings", "page"].includes(item.getId() ?? ""),
+        (item) => !["article", "notesSettings", "siteSettings", "page"].includes(item.getId() ?? ""),
       ),
     ]);
