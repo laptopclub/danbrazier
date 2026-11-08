@@ -28,6 +28,12 @@ body {
   font-family: var(--font-sans);
 }
 
+@media (min-width: 1024px) {
+  .home-intro .prose {
+    width: 33.333333%;
+  }
+}
+
 @layer utilities {
   .font-heading {
     font-family: var(--font-sans);

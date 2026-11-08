@@ -1,3 +1,4 @@
+import { randomInt } from "node:crypto";
 import { Parallax } from "./parallax";
 
 type Quote = { author?: string; text?: string };
@@ -23,8 +24,8 @@ function lines(text: string): string[] {
 export function RandomQuote({ block }: { block: RandomQuoteBlock }) {
   const quotes = (block.quotes ?? []).map((quote) => ({ quote, lines: lines(quote.text?.trim() ?? "") })).filter(({ lines: quoteLines }) => quoteLines.length);
   if (!quotes.length) return null;
-  const selected = quotes[Math.floor(Math.random() * quotes.length)]!;
+  const selected = quotes[randomInt(quotes.length)]!;
   const { quote, lines: quoteLines } = selected;
 
-  return <section className="relative overflow-x-clip overflow-y-visible px-6 py-20 sm:py-28"><div aria-hidden="true" className="pointer-events-none absolute right-[-0.12em] top-0 z-0 -translate-y-[25%]"><Parallax className="select-none font-serif text-[clamp(14rem,34vw,30rem)] leading-none text-neutral-100" direction="down" speed={42}>”</Parallax></div><div className="relative z-10 mx-auto max-w-7xl text-center"><blockquote>{block.staggered !== false ? <div className="text-3xl font-bold leading-tight tracking-tight text-neutral-950 sm:text-5xl">{quoteLines.map((line, index) => <span className="block" key={`${line}-${index}`} style={{ transform: `translateX(${index ? offsets[Math.floor(Math.random() * offsets.length)] : "0%"})` }}>{line}</span>)}</div> : <p className="mx-auto max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-5xl">“{quote.text}”</p>}{quote.author ? <cite className="font-quote-attribution mt-10 block not-italic text-neutral-500">{quote.author}</cite> : null}</blockquote></div></section>;
+  return <section className="relative overflow-x-clip overflow-y-visible px-6 py-20 sm:py-28"><div aria-hidden="true" className="pointer-events-none absolute right-[-0.12em] top-0 z-0 -translate-y-[25%]"><Parallax className="select-none font-serif text-[clamp(14rem,34vw,30rem)] leading-none text-neutral-100" direction="down" speed={42}>”</Parallax></div><div className="relative z-10 mx-auto max-w-7xl text-center"><blockquote>{block.staggered !== false ? <div className="text-3xl font-bold leading-tight tracking-tight text-neutral-950 sm:text-5xl">{quoteLines.map((line, index) => <span className="block" key={`${line}-${index}`} style={{ transform: `translateX(${index ? offsets[randomInt(offsets.length)] : "0%"})` }}>{line}</span>)}</div> : <p className="mx-auto max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-5xl">“{quote.text}”</p>}{quote.author ? <cite className="font-quote-attribution mt-10 block not-italic text-neutral-500">{quote.author}</cite> : null}</blockquote></div></section>;
 }

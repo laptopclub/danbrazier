@@ -57,5 +57,5 @@ export default async function HomePage() {
   const contentBlocks = blocks.filter((block) => block._type !== "randomQuoteBlock");
   const imageConfig = { dataset: env.sanity.dataset, projectId: env.sanity.projectId };
 
-  return <><BlockRenderer blocks={contentBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /><LatestArticles articles={articles} notesHeading={site.notesHeading} notesLinkLabel={site.notesLinkLabel} /><BlockRenderer blocks={quoteBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /></>;
+  return <>{contentBlocks.map((block, index) => <div className={block._key === "HeythereImDa" ? "home-intro" : undefined} key={block._key ?? `${block._type}-${index}`}><BlockRenderer blocks={[block]} imageConfig={imageConfig} registry={siteBlockRegistry} /></div>)}<LatestArticles articles={articles} notesHeading={site.notesHeading} notesLinkLabel={site.notesLinkLabel} /><BlockRenderer blocks={quoteBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /></>;
 }
