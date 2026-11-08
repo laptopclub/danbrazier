@@ -1,0 +1,3 @@
+{
+  "crons": [{ "path": "/api/algolia-reconcile", "schedule": "17 4 * * *" }]
+}
