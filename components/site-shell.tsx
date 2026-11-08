@@ -38,7 +38,7 @@ export function SiteShell({ children, footerHeading = "Get in touch", footerTagl
       <EdgeBlur edge="top" />
       <main className="flex-1">{children}</main>
       <footer className="relative z-50 mt-24 bg-neutral-950 px-6 py-20 text-white sm:px-10 sm:py-28 lg:px-16">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-6xl">
           <h2 className="font-heading text-display">{footerHeading}</h2>
           <div className="mt-16 grid gap-12 md:grid-cols-2">
             <div>
