@@ -41,7 +41,7 @@ export function SiteShell({ children, footerHeading = "Get in touch", newsletter
           <h2 className="font-heading text-display">{footerHeading}</h2>
           <div className="mt-16 grid gap-12 md:grid-cols-2">
             <div>
-              <p className="text-sm font-semibold text-neutral-400">{newsletterHeading}</p>
+              <p className="font-button text-base text-neutral-400">{newsletterHeading}</p>
               <form className="mt-5 flex max-w-md items-center gap-3">
                 <label className="sr-only" htmlFor="email">Email address</label>
                 <input
@@ -57,7 +57,7 @@ export function SiteShell({ children, footerHeading = "Get in touch", newsletter
               </form>
             </div>
             <nav aria-label="Elsewhere" className="flex flex-col gap-3 md:items-end">
-              <p className="text-sm font-semibold text-neutral-400">{socialHeading}</p>
+              <p className="font-button text-base text-neutral-400">{socialHeading}</p>
               <div className="flex gap-4">{socialLinks.map((link) => {
                 if (!link.href || !link.label) return null;
                 const iconClass = socialIconClass(link);
