@@ -58,7 +58,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html className={`${geistSans.variable} ${geistMono.variable} ${geistPixel.variable}`} lang="en">
       <body>
-        <SiteShell footerHeading={site.footerHeading} newsletterButtonLabel={site.newsletterButtonLabel} newsletterHeading={site.newsletterHeading} newsletterPlaceholder={site.newsletterPlaceholder} socialHeading={site.socialHeading} socialLinks={site.socialLinks}>{children}</SiteShell>
+        <SiteShell footerHeading={site.footerHeading} footerTagline={site.footerTagline} newsletterButtonLabel={site.newsletterButtonLabel} newsletterHeading={site.newsletterHeading} newsletterPlaceholder={site.newsletterPlaceholder} socialHeading={site.socialHeading} socialLinks={site.socialLinks}>{children}</SiteShell>
         <SanityLive />
         {mode.isEnabled ? (
           <>

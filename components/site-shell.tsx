@@ -24,6 +24,7 @@ function socialIconClass(link: { href?: string; label?: string }): string | unde
 type SiteShellProps = {
   children: ReactNode;
   footerHeading?: string;
+  footerTagline?: string;
   newsletterButtonLabel?: string;
   newsletterHeading?: string;
   newsletterPlaceholder?: string;
@@ -31,7 +32,7 @@ type SiteShellProps = {
   socialLinks?: Array<{ href?: string; label?: string; openInNewTab?: boolean }>;
 };
 
-export function SiteShell({ children, footerHeading = "Get in touch", newsletterButtonLabel = "Subscribe", newsletterHeading = "Join the mailing list", newsletterPlaceholder = "your@email.com", socialHeading = "Elsewhere", socialLinks = [] }: SiteShellProps) {
+export function SiteShell({ children, footerHeading = "Get in touch", footerTagline, newsletterButtonLabel = "Subscribe", newsletterHeading = "Join my mailing list", newsletterPlaceholder = "your@email.com", socialHeading = "Elsewhere", socialLinks = [] }: SiteShellProps) {
   return (
     <div className="flex min-h-screen flex-col">
       <EdgeBlur edge="top" />
@@ -55,6 +56,7 @@ export function SiteShell({ children, footerHeading = "Get in touch", newsletter
                   {newsletterButtonLabel}
                 </button>
               </form>
+              {footerTagline ? <p className="mt-4 max-w-md text-sm leading-6 text-neutral-400">{footerTagline}</p> : null}
             </div>
             <nav aria-label="Elsewhere" className="flex flex-col gap-3 md:items-end">
               <p className="font-button text-base text-neutral-400">{socialHeading}</p>
