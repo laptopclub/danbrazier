@@ -26,7 +26,7 @@ html {
 body {
   @apply bg-white text-neutral-800 antialiased;
   /* So White: https://www.toptal.com/designers/subtlepatterns/so-white-pattern/ */
-  background-image: url("/images/so-white.png");
+  background-image: linear-gradient(rgb(255 255 255 / 20%), rgb(255 255 255 / 20%)), url("/images/so-white.png");
   background-repeat: repeat;
   font-family: var(--font-sans);
 }
