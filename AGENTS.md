@@ -5,7 +5,7 @@ This file captures site-specific rules for AI agents working in this client repo
 ## Project summary
 
 - Client/site: Dan Brazier
-- Foundation package version: 0.1.33
+- Foundation package version: 0.1.37
 - Production URL: https://danbrazier.co.uk
 - Sanity project/dataset: zul5551z / production
 

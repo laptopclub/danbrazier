@@ -1,4 +1,4 @@
-import { articlesQuery, homePageQuery } from "@laptopclub/foundation-cms/queries";
+import { articleSummaryFields, articlesQuery, homePageQuery } from "@laptopclub/foundation-cms/queries";
 import { BlockRenderer } from "@laptopclub/foundation-ui";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -31,7 +31,7 @@ async function getHighlights(): Promise<HighlightsData[]> {
   const client = sanityClient.withConfig({ token: env.sanity.readToken, useCdn: false, perspective: "published" });
   return (await client.fetch<HighlightsData[] | null>(`*[_type == "page" && (_id == "page.home" || slug.current == "home")][0].blocks[_type == "highlightsBlock"]{
     _key, heading, description,
-    "articles": articles[]->{title, "slug": slug.current, excerpt, publishedAt, coverImage{..., asset->{_id, metadata{dimensions, lqip}}}}
+    "articles": articles[]->${articleSummaryFields}
   }`, {}, { stega: false, cache: "no-store" })) ?? [];
 }
 

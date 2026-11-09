@@ -7,7 +7,7 @@ import { highlightsBlock } from "./highlights-block";
 const siteArticle = {
   ...article,
   fields: [
-    ...article.fields,
+    ...article.fields.map((field) => field.name === "coverImage" ? { ...field, title: "Primary image", description: "Optional. If empty, the first image in the article body is used for cards and highlights." } : field),
     defineField({
       name: "linkedinVideoActivityId",
       title: "LinkedIn video activity ID",
