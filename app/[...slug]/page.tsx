@@ -56,6 +56,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const [page, site] = await Promise.all([getPage(slug, { stega: false }), getSiteSettings({ stega: false })]);
 
   return {
+    alternates: { canonical: `/${slug.split("/").map(encodeURIComponent).join("/")}` },
     description: page?.seo?.description ?? site.description,
     robots: page?.seo?.noIndex ? { follow: false, index: false } : undefined,
     title: page?.seo?.title ?? page?.title ?? site.title

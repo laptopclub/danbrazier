@@ -1,5 +1,6 @@
 import { articlesQuery, homePageQuery } from "@laptopclub/foundation-cms/queries";
 import { BlockRenderer } from "@laptopclub/foundation-ui";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Parallax } from "../components/parallax";
@@ -10,6 +11,7 @@ import { getSiteSettings } from "../lib/site";
 import type { PageBySlugQueryResult } from "../lib/sanity-query-types";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 type PageData = NonNullable<PageBySlugQueryResult>;
 

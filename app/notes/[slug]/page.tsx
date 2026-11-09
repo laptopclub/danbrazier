@@ -24,7 +24,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const [article, site] = await Promise.all([getArticle(slug, false), getSiteSettings({ stega: false })]);
-  return { description: article?.seo?.description ?? article?.excerpt ?? site.description, robots: article?.seo?.noIndex ? { follow: false, index: false } : undefined, title: article?.seo?.title ?? article?.title ?? site.title };
+  return { alternates: { canonical: `/notes/${encodeURIComponent(slug)}` }, description: article?.seo?.description ?? article?.excerpt ?? site.description, robots: article?.seo?.noIndex ? { follow: false, index: false } : undefined, title: article?.seo?.title ?? article?.title ?? site.title };
 }
 
 export default async function ArticleRoute({ params }: { params: Promise<{ slug: string }> }) {

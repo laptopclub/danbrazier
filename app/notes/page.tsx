@@ -8,7 +8,7 @@ import { sanityClient } from "../../lib/sanity";
 import { getSiteSettings } from "../../lib/site";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { description: "Notes on commerce, technology and rebuilding things carefully.", title: "Notes" };
+export const metadata: Metadata = { alternates: { canonical: "/notes" }, description: "Notes on commerce, technology and rebuilding things carefully.", title: "Notes" };
 
 type ArticleSummary = {
   coverImage?: SanityImageData;
