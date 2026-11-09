@@ -9,7 +9,8 @@ for (const route of routes) {
     await expect(page.locator("main")).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://danbrazier.co.uk${route === "/" ? "" : route}`);
     await expect(page.getByRole("link", { name: "Home", exact: true })).toHaveAttribute("href", "/");
-    await expect(page.locator("main h1").first()).toHaveCSS("font-weight", "500");
+    await expect(page.locator("main h1").first()).toHaveCSS("font-weight", route.startsWith("/notes/") ? "400" : "500");
+    if (route.startsWith("/notes/")) await expect(page.locator("main h1").first()).toHaveClass(/font-heading-mono/);
     await expect(page.locator("main h2").first()).toHaveCSS("font-weight", route === "/notes" ? "400" : "500");
 
     const results = await new AxeBuilder({ page })
