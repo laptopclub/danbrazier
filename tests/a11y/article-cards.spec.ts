@@ -32,3 +32,20 @@ test("recent and archive cards use the same article content", async ({ page }) =
   await expect(archiveCard.locator("time")).toHaveClass(/font-button/);
   await expect(archiveCard.locator("time")).toHaveClass(/text-sm/);
 });
+
+test("highlight dates match archive card dates", async ({ page }) => {
+  await page.goto("/");
+  const highlights = page.locator("section").filter({ has: page.getByRole("heading", { name: "Highlights", exact: true }) });
+  const highlight = highlights.locator("article").first();
+  await expect(highlight).toBeVisible();
+  const href = await highlight.locator("a").getAttribute("href");
+  const date = await highlight.locator("time").innerText();
+  expect(date).toMatch(/^\d{2} [A-Z]{3} \d{4}$/);
+  await expect(highlight.locator("time")).toHaveClass(/font-button/);
+  await expect(highlight.locator("time")).toHaveClass(/text-sm/);
+  expect(href).toBeTruthy();
+
+  await page.goto("/notes");
+  const archiveCard = page.locator("article").filter({ has: page.locator(`a[href="${href}"]`) });
+  await expect(archiveCard.locator("time")).toHaveText(date);
+});

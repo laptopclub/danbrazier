@@ -31,7 +31,7 @@ async function getHighlights(): Promise<HighlightsData[]> {
   const client = sanityClient.withConfig({ token: env.sanity.readToken, useCdn: false, perspective: "published" });
   return (await client.fetch<HighlightsData[] | null>(`*[_type == "page" && (_id == "page.home" || slug.current == "home")][0].blocks[_type == "highlightsBlock"]{
     _key, heading, description,
-    "articles": articles[]->{title, "slug": slug.current, excerpt, coverImage{..., asset->{_id, metadata{dimensions, lqip}}}}
+    "articles": articles[]->{title, "slug": slug.current, excerpt, publishedAt, coverImage{..., asset->{_id, metadata{dimensions, lqip}}}}
   }`, {}, { stega: false, cache: "no-store" })) ?? [];
 }
 
