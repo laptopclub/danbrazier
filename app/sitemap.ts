@@ -3,6 +3,8 @@ import type { MetadataRoute } from "next";
 import { env } from "../lib/env";
 import { sanityClient } from "../lib/sanity";
 
+export const dynamic = "force-dynamic";
+
 type SitemapPage = {
   _updatedAt?: string;
   slug?: string;
@@ -18,9 +20,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [{ url: new URL("/", env.siteUrl).toString() }];
   }
 
+  const client = sanityClient.withConfig({ token: env.sanity.readToken, useCdn: false });
   const [pages, articles] = await Promise.all([
-    sanityClient.fetch<SitemapPage[]>(sitemapPagesQuery, {}, { perspective: "published", stega: false }),
-    sanityClient.fetch<SitemapPage[]>(sitemapArticlesQuery, {}, { perspective: "published", stega: false })
+    client.fetch<SitemapPage[]>(sitemapPagesQuery, {}, { perspective: "published", stega: false, cache: "no-store" }),
+    client.fetch<SitemapPage[]>(sitemapArticlesQuery, {}, { perspective: "published", stega: false, cache: "no-store" })
   ]);
 
   return [
