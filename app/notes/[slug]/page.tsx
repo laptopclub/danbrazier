@@ -1,7 +1,7 @@
 import { allArticleSlugsQuery, articleBySlugQuery } from "@laptopclub/foundation-cms/queries";
 import type { ArticleData } from "@laptopclub/foundation-ui";
 import type { Metadata } from "next";
-import { groq } from "next-sanity";
+import { groq, stegaClean } from "next-sanity";
 import { notFound } from "next/navigation";
 import { NoteArticle } from "../../../components/note-article";
 import { env } from "../../../lib/env";
@@ -32,9 +32,9 @@ export default async function ArticleRoute({ params }: { params: Promise<{ slug:
   const { slug } = await params;
   const [article, video] = await Promise.all([
     getArticle(slug),
-    sanityFetch({ params: { slug }, query: groq`*[_type == "article" && slug.current == $slug][0]{linkedinVideoActivityId}`, stega: false })
+    sanityFetch({ params: { slug }, query: groq`*[_type == "article" && slug.current == $slug][0]{linkedinVideoActivityId}`, stega: true })
   ]);
   if (!article) notFound();
   const videoData = video.data as { linkedinVideoActivityId?: string | null } | null;
-  return <NoteArticle article={article} imageConfig={{ dataset: env.sanity.dataset, projectId: env.sanity.projectId }} linkedinVideoActivityId={videoData?.linkedinVideoActivityId} slug={slug} />;
+  return <NoteArticle article={article} imageConfig={{ dataset: env.sanity.dataset, projectId: env.sanity.projectId }} linkedinVideoActivityId={stegaClean(videoData?.linkedinVideoActivityId)} slug={slug} />;
 }
