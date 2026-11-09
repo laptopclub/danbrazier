@@ -35,10 +35,14 @@ test("body images have space on both sides without narrowing the article text", 
   }
 });
 
-test("explicit covers and text-only summaries still work", async ({ page }) => {
+test("NXT panel photo appears in the body and its card, while articles without images stay text-only", async ({ page }) => {
   await page.goto("/notes");
-  const withCover = page.locator("article").filter({ has: page.locator('a[href="/notes/nxt-commerce-copenhagen-2026"]') });
-  await expect(withCover.locator("img")).toHaveAttribute("src", /27bb8de3a6db52482845d03a9894d7d56ddde2df/);
+  const nxtCard = page.locator("article").filter({ has: page.locator('a[href="/notes/nxt-commerce-copenhagen-2026"]') });
+  await expect(nxtCard.locator("img")).toHaveAttribute("src", /27bb8de3a6db52482845d03a9894d7d56ddde2df/);
   const withoutImage = page.locator("article").filter({ has: page.locator('a[href="/notes/building-foundation"]') });
   await expect(withoutImage.locator("img")).toHaveCount(0);
+  await page.goto("/notes/nxt-commerce-copenhagen-2026");
+  const images = page.locator("article img");
+  await expect(images).toHaveCount(1);
+  await expect(page.locator("article .prose figure img")).toHaveAttribute("src", /27bb8de3a6db52482845d03a9894d7d56ddde2df/);
 });
