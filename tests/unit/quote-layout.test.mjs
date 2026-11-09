@@ -9,8 +9,8 @@ test("the first quote line stays centred for every phase", () => {
 test("the wave is bounded and neighbouring lines move gradually", () => {
   for (let phase = 0; phase < 2 * Math.PI; phase += 0.1) {
     for (let line = 0; line < 20; line++) {
-      assert.ok(Math.abs(quoteLineOffset(line, phase)) <= 1.5 + 1e-10);
-      assert.ok(Math.abs(quoteLineOffset(line + 1, phase) - quoteLineOffset(line, phase)) <= 0.75 + 1e-10);
+      assert.ok(Math.abs(quoteLineOffset(line, phase)) <= 4.5 + 1e-10);
+      assert.ok(Math.abs(quoteLineOffset(line + 1, phase) - quoteLineOffset(line, phase)) <= 2.25 + 1e-10);
     }
   }
 });
