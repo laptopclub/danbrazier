@@ -2811,6 +2811,13 @@
           "name": "seo"
         },
         "optional": true
+      },
+      "linkedinVideoActivityId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       }
     }
   },

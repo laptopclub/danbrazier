@@ -338,6 +338,7 @@ export type Article = {
   body?: PortableContent;
   topics?: Array<string>;
   seo?: Seo;
+  linkedinVideoActivityId?: string;
 };
 
 export type Slug = {

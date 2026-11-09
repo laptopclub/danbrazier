@@ -10,10 +10,10 @@ export const highlightsBlock = defineType({
     defineField({
       name: "articles",
       title: "Highlighted articles",
-      description: "Select and drag articles into the order they should appear. Leave empty to hide this section.",
+      description: "Select up to three articles and drag them into order. Leave empty to hide this section.",
       type: "array",
       of: [defineArrayMember({ type: "reference", to: [{ type: "article" }] })],
-      validation: (rule) => rule.max(6).unique()
+      validation: (rule) => rule.max(3).unique()
     })
   ],
   preview: { select: { title: "heading" }, prepare: ({ title }) => ({ title: title || "Article highlights" }) }

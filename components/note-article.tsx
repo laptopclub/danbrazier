@@ -1,8 +1,9 @@
 import { RichTextBlock, SanityImage, type ArticleData, type ImageConfig } from "@laptopclub/foundation-ui";
 import { formatArticleDate } from "../lib/article-date";
 import { SelectedNotes } from "./selected-notes";
+import { LinkedInVideo } from "./linkedin-video";
 
-export function NoteArticle({ article, imageConfig, slug }: { article: ArticleData; imageConfig: ImageConfig; slug: string }) {
+export function NoteArticle({ article, imageConfig, slug, linkedinVideoActivityId }: { article: ArticleData; imageConfig: ImageConfig; slug: string; linkedinVideoActivityId?: string | null }) {
   const date = formatArticleDate(article.publishedAt);
 
   return (
@@ -19,6 +20,7 @@ export function NoteArticle({ article, imageConfig, slug }: { article: ArticleDa
         <div className={`-mx-6 min-w-0 ${article.coverImage ? "" : "[&>section]:pt-0"}`}>
           {article.coverImage ? <div className="px-6"><SanityImage className="aspect-[16/9] w-full rounded-3xl object-cover" config={imageConfig} image={article.coverImage} priority sizes="(min-width: 1024px) 700px, 100vw" /></div> : null}
           <RichTextBlock block={{ _type: "richTextBlock", content: article.body, spacing: "standard", width: "narrow" }} imageConfig={imageConfig} />
+          {linkedinVideoActivityId ? <LinkedInVideo activityId={linkedinVideoActivityId} /> : null}
         </div>
         <SelectedNotes currentSlug={slug} />
       </div>

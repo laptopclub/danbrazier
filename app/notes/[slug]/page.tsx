@@ -1,6 +1,7 @@
 import { allArticleSlugsQuery, articleBySlugQuery } from "@laptopclub/foundation-cms/queries";
 import type { ArticleData } from "@laptopclub/foundation-ui";
 import type { Metadata } from "next";
+import { groq } from "next-sanity";
 import { notFound } from "next/navigation";
 import { NoteArticle } from "../../../components/note-article";
 import { env } from "../../../lib/env";
@@ -29,7 +30,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ArticleRoute({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = await getArticle(slug);
+  const [article, video] = await Promise.all([
+    getArticle(slug),
+    sanityFetch({ params: { slug }, query: groq`*[_type == "article" && slug.current == $slug][0]{linkedinVideoActivityId}`, stega: false })
+  ]);
   if (!article) notFound();
-  return <NoteArticle article={article} imageConfig={{ dataset: env.sanity.dataset, projectId: env.sanity.projectId }} slug={slug} />;
+  const videoData = video.data as { linkedinVideoActivityId?: string | null } | null;
+  return <NoteArticle article={article} imageConfig={{ dataset: env.sanity.dataset, projectId: env.sanity.projectId }} linkedinVideoActivityId={videoData?.linkedinVideoActivityId} slug={slug} />;
 }
