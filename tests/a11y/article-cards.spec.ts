@@ -5,7 +5,7 @@ test("recent and archive cards use the same article content", async ({ page }) =
   const recent = page.locator("section").filter({ has: page.getByRole("heading", { name: "Recent notes", exact: true }) });
   const card = recent.locator("article").first();
   await expect(card).toBeVisible();
-  await expect(card.locator("a")).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(card.locator("a")).toHaveCSS("background-color", "rgba(255, 255, 255, 0.9)");
   const border = await card.locator("a").evaluate((element) => {
     const style = getComputedStyle(element);
     return { radius: style.borderRadius, width: style.borderWidth, color: style.borderColor };
@@ -21,7 +21,7 @@ test("recent and archive cards use the same article content", async ({ page }) =
 
   await page.goto("/notes");
   const archiveCard = page.locator("article").filter({ has: page.locator(`a[href="${href}"]`) });
-  await expect(archiveCard.locator("a")).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(archiveCard.locator("a")).toHaveCSS("background-color", "rgba(255, 255, 255, 0.9)");
   expect(await archiveCard.locator("a").evaluate((element) => {
     const style = getComputedStyle(element);
     return { radius: style.borderRadius, width: style.borderWidth, color: style.borderColor };
