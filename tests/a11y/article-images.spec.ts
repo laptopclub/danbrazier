@@ -18,6 +18,23 @@ test("article summaries use body images when no primary image is selected", asyn
   await expect(images.first()).toHaveAttribute("src", new RegExp(imageHash));
 });
 
+test("body images have space on both sides without narrowing the article text", async ({ page }) => {
+  for (const width of [390, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/notes/stockholm-commerce-customisation");
+    const bounds = await page.locator("article .prose").evaluate((prose) => {
+      const paragraph = prose.querySelector("p");
+      const image = prose.querySelector("figure img");
+      if (!paragraph || !image) throw new Error("Expected article paragraph and body image");
+      const text = paragraph.getBoundingClientRect();
+      const photo = image.getBoundingClientRect();
+      return { left: photo.left - text.left, right: text.right - photo.right };
+    });
+    expect(bounds.left).toBeGreaterThanOrEqual(20);
+    expect(bounds.right).toBeGreaterThanOrEqual(20);
+  }
+});
+
 test("explicit covers and text-only summaries still work", async ({ page }) => {
   await page.goto("/notes");
   const withCover = page.locator("article").filter({ has: page.locator('a[href="/notes/nxt-commerce-copenhagen-2026"]') });

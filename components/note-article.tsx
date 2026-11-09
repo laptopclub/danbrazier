@@ -17,7 +17,7 @@ export function NoteArticle({ article, imageConfig, slug, linkedinVideoActivityI
         </header>
       </div>
       <div className="mt-12 grid gap-16 sm:mt-16 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-        <div className={`-mx-6 min-w-0 ${article.coverImage ? "" : "[&>section]:pt-0"}`}>
+        <div className={`-mx-6 min-w-0 [&_.prose_figure]:px-6 sm:[&_.prose_figure]:px-10 ${article.coverImage ? "" : "[&>section]:pt-0"}`}>
           {article.coverImage ? <div className="px-6"><SanityImage className="aspect-[16/9] w-full rounded-3xl object-cover" config={imageConfig} image={article.coverImage} priority sizes="(min-width: 1024px) 700px, 100vw" /></div> : null}
           <RichTextBlock block={{ _type: "richTextBlock", content: article.body, spacing: "standard", width: "narrow" }} imageConfig={imageConfig} />
           {linkedinVideoActivityId ? <LinkedInVideo activityId={linkedinVideoActivityId} /> : null}
