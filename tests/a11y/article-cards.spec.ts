@@ -48,4 +48,10 @@ test("highlight dates match archive card dates", async ({ page }) => {
   await page.goto("/notes");
   const archiveCard = page.locator("article").filter({ has: page.locator(`a[href="${href}"]`) });
   await expect(archiveCard.locator("time")).toHaveText(date);
+
+  await page.goto(href!);
+  const articleDate = page.locator("article > div > header time");
+  await expect(articleDate).toHaveText(date);
+  await expect(articleDate).toHaveClass(/font-button/);
+  await expect(articleDate).toHaveClass(/text-sm/);
 });
