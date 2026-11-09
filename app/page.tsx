@@ -66,17 +66,15 @@ export default async function HomePage() {
 
   const blocks = page.blocks as Array<{ _key?: string; _type: string }>;
   const quoteBlocks = blocks.filter((block) => block._type === "randomQuoteBlock");
-  const contentBlocks = blocks.filter((block) => block._type !== "randomQuoteBlock");
+  const contentBlocks = blocks.filter((block) => block._type !== "randomQuoteBlock" && block._type !== "highlightsBlock");
+  const highlightBlocks = blocks.filter((block) => block._type === "highlightsBlock");
   const imageConfig = { dataset: env.sanity.dataset, projectId: env.sanity.projectId };
   const highlightsByKey = new Map(highlights.map((block) => [block._key, block]));
   const highlightedSlugs = new Set(highlights.flatMap((block) => (block.articles ?? []).flatMap((article) => article?.slug ? [article.slug] : [])));
   const recentArticles = articles.filter((article) => !article.slug || !highlightedSlugs.has(article.slug)).slice(0, 3);
 
-  return <>{contentBlocks.some((block) => block._type === "heroBlock") ? null : <h1 className="sr-only">Dan Brazier</h1>}{contentBlocks.map((block, index) => {
-    if (block._type === "highlightsBlock") {
-      const highlight = block._key ? highlightsByKey.get(block._key) : undefined;
-      return highlight ? <Highlights block={highlight} imageConfig={imageConfig} key={highlight._key} /> : null;
-    }
-    return <div className={block._key === "HeythereImDa" ? "home-intro" : undefined} key={block._key ?? `${block._type}-${index}`}><BlockRenderer blocks={[block]} imageConfig={imageConfig} registry={siteBlockRegistry} /></div>;
-  })}<LatestArticles articles={recentArticles} notesHeading={site.notesHeading} notesDescription={site.notesDescription} notesLinkLabel={site.notesLinkLabel} /><BlockRenderer blocks={quoteBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /></>;
+  return <>{contentBlocks.some((block) => block._type === "heroBlock") ? null : <h1 className="sr-only">Dan Brazier</h1>}{contentBlocks.map((block, index) => <div className={block._key === "HeythereImDa" ? "home-intro" : undefined} key={block._key ?? `${block._type}-${index}`}><BlockRenderer blocks={[block]} imageConfig={imageConfig} registry={siteBlockRegistry} /></div>)}<LatestArticles articles={recentArticles} notesHeading={site.notesHeading} notesDescription={site.notesDescription} notesLinkLabel={site.notesLinkLabel} />{highlightBlocks.map((block) => {
+    const highlight = block._key ? highlightsByKey.get(block._key) : undefined;
+    return highlight ? <Highlights block={highlight} imageConfig={imageConfig} key={highlight._key} /> : null;
+  })}<BlockRenderer blocks={quoteBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /></>;
 }
