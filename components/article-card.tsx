@@ -19,7 +19,7 @@ export function ArticleCard({ article, imageConfig, variant }: { article: Articl
 
   return (
     <article className={isRecent ? "h-full" : undefined}>
-      <Link className={`group block bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-950 ${isRecent ? "h-full rounded-2xl border border-neutral-200 p-6 shadow-sm transition hover:-translate-y-1 hover:border-neutral-500 hover:shadow-lg" : "rounded-sm border-t border-slate-200 pt-6"}`} href={`/notes/${article.slug}`}>
+      <Link className={`group block rounded-2xl border border-neutral-200 bg-white p-6 transition hover:border-neutral-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-950 ${isRecent ? "h-full shadow-sm hover:-translate-y-1 hover:shadow-lg" : ""}`} href={`/notes/${article.slug}`}>
         {!isRecent && article.coverImage ? <SanityImage className="mb-6 aspect-[16/9] w-full rounded-2xl object-cover" config={imageConfig} image={article.coverImage} sizes="(min-width: 1024px) 66vw, 100vw" /> : null}
         {date ? <time className="font-button text-sm text-slate-500" dateTime={article.publishedAt ?? undefined}>{date}</time> : null}
         <Heading className={isRecent ? "font-heading-mono mt-2 text-2xl font-normal tracking-tight text-neutral-950 group-hover:text-neutral-600" : "font-heading-mono mt-3 text-2xl font-normal tracking-tight group-hover:text-brand-700"}>{article.title}</Heading>
