@@ -28,6 +28,7 @@ body {
   /* So White: https://www.toptal.com/designers/subtlepatterns/so-white-pattern/ */
   background-image: linear-gradient(rgb(255 255 255 / 20%), rgb(255 255 255 / 20%)), url("/images/so-white.png");
   background-repeat: repeat;
+  overflow-x: clip;
   font-family: var(--font-sans);
 }
 

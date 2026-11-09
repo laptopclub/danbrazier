@@ -22,6 +22,17 @@ export type ArticleReference = {
   [internalGroqTypeReferenceTo]?: "article";
 };
 
+export type HighlightsBlock = {
+  _type: "highlightsBlock";
+  heading?: string;
+  description?: string;
+  articles?: Array<
+    {
+      _key: string;
+    } & ArticleReference
+  >;
+};
+
 export type NotesSettings = {
   _id: string;
   _type: "notesSettings";
@@ -428,6 +439,9 @@ export type Page = {
     | ({
         _key: string;
       } & RandomQuoteBlock)
+    | ({
+        _key: string;
+      } & HighlightsBlock)
   >;
 };
 
@@ -546,6 +560,7 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | ArticleReference
+  | HighlightsBlock
   | NotesSettings
   | RandomQuoteBlock
   | RichTextBlock

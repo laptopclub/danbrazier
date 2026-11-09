@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Parallax } from "../components/parallax";
+import { Highlights, type HighlightsData } from "../components/highlights";
 import { siteBlockRegistry } from "../lib/blocks";
 import { env } from "../lib/env";
 import { sanityClient } from "../lib/sanity";
@@ -31,12 +32,21 @@ async function getHomePage(): Promise<PageData | null> {
   return sanityClient.withConfig({ token: env.sanity.readToken, useCdn: false }).fetch<PageBySlugQueryResult>(homePageQuery);
 }
 
+async function getHighlights(): Promise<HighlightsData[]> {
+  if (env.sanity.projectId === "placeholder") return [];
+  const client = sanityClient.withConfig({ token: env.sanity.readToken, useCdn: false, perspective: "published" });
+  return (await client.fetch<HighlightsData[] | null>(`*[_type == "page" && (_id == "page.home" || slug.current == "home")][0].blocks[_type == "highlightsBlock"]{
+    _key, heading, description,
+    "articles": articles[]->{title, "slug": slug.current, excerpt, coverImage{..., asset->{_id, metadata{dimensions, lqip}}}}
+  }`, {}, { stega: false, cache: "no-store" })) ?? [];
+}
+
 async function getLatestArticles(): Promise<ArticleSummary[]> {
   if (env.sanity.projectId === "placeholder") {
     return [];
   }
 
-  return (await sanityClient.withConfig({ token: env.sanity.readToken, useCdn: false }).fetch<ArticleSummary[]>(articlesQuery)).slice(0, 3);
+  return sanityClient.withConfig({ token: env.sanity.readToken, useCdn: false }).fetch<ArticleSummary[]>(articlesQuery);
 }
 
 function LatestArticles({ articles, notesHeading = "Notes", notesDescription, notesLinkLabel = "View all notes" }: { articles: ArticleSummary[]; notesHeading?: string; notesDescription?: string; notesLinkLabel?: string }) {
@@ -48,7 +58,7 @@ function LatestArticles({ articles, notesHeading = "Notes", notesDescription, no
 }
 
 export default async function HomePage() {
-  const [page, articles, site] = await Promise.all([getHomePage(), getLatestArticles(), getSiteSettings({ stega: false })]);
+  const [page, articles, highlights, site] = await Promise.all([getHomePage(), getLatestArticles(), getHighlights(), getSiteSettings({ stega: false })]);
 
   if (!page?.blocks?.length) {
     notFound();
@@ -58,6 +68,15 @@ export default async function HomePage() {
   const quoteBlocks = blocks.filter((block) => block._type === "randomQuoteBlock");
   const contentBlocks = blocks.filter((block) => block._type !== "randomQuoteBlock");
   const imageConfig = { dataset: env.sanity.dataset, projectId: env.sanity.projectId };
+  const highlightsByKey = new Map(highlights.map((block) => [block._key, block]));
+  const highlightedSlugs = new Set(highlights.flatMap((block) => (block.articles ?? []).flatMap((article) => article?.slug ? [article.slug] : [])));
+  const recentArticles = articles.filter((article) => !article.slug || !highlightedSlugs.has(article.slug)).slice(0, 3);
 
-  return <>{contentBlocks.some((block) => block._type === "heroBlock") ? null : <h1 className="sr-only">Dan Brazier</h1>}{contentBlocks.map((block, index) => <div className={block._key === "HeythereImDa" ? "home-intro" : undefined} key={block._key ?? `${block._type}-${index}`}><BlockRenderer blocks={[block]} imageConfig={imageConfig} registry={siteBlockRegistry} /></div>)}<LatestArticles articles={articles} notesHeading={site.notesHeading} notesDescription={site.notesDescription} notesLinkLabel={site.notesLinkLabel} /><BlockRenderer blocks={quoteBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /></>;
+  return <>{contentBlocks.some((block) => block._type === "heroBlock") ? null : <h1 className="sr-only">Dan Brazier</h1>}{contentBlocks.map((block, index) => {
+    if (block._type === "highlightsBlock") {
+      const highlight = block._key ? highlightsByKey.get(block._key) : undefined;
+      return highlight ? <Highlights block={highlight} imageConfig={imageConfig} key={highlight._key} /> : null;
+    }
+    return <div className={block._key === "HeythereImDa" ? "home-intro" : undefined} key={block._key ?? `${block._type}-${index}`}><BlockRenderer blocks={[block]} imageConfig={imageConfig} registry={siteBlockRegistry} /></div>;
+  })}<LatestArticles articles={recentArticles} notesHeading={site.notesHeading} notesDescription={site.notesDescription} notesLinkLabel={site.notesLinkLabel} /><BlockRenderer blocks={quoteBlocks} imageConfig={imageConfig} registry={siteBlockRegistry} /></>;
 }
