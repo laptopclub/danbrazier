@@ -20,7 +20,7 @@ export function ArticleCard({ article, imageConfig, variant }: { article: Articl
   return (
     <article className={isRecent ? "h-full" : undefined}>
       <Link className={`group block rounded-2xl border border-neutral-200 bg-white/90 p-6 transition hover:border-neutral-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-neutral-950 ${isRecent ? "h-full shadow-sm hover:-translate-y-1 hover:shadow-lg" : ""}`} href={`/notes/${article.slug}`}>
-        {article.coverImage ? <SanityImage className="mb-6 aspect-[16/9] w-full rounded-2xl object-cover" config={imageConfig} image={article.coverImage} sizes={isRecent ? "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" : "(min-width: 1024px) 66vw, 100vw"} /> : null}
+        {article.coverImage ? <div className="mb-6 overflow-hidden rounded-2xl" data-parallax-frame><SanityImage className="aspect-[16/9] w-full object-cover" config={imageConfig} image={article.coverImage} sizes={isRecent ? "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" : "(min-width: 1024px) 66vw, 100vw"} /></div> : null}
         {date ? <time className="font-button text-sm text-slate-500" dateTime={article.publishedAt ?? undefined}>{date}</time> : null}
         <Heading className={isRecent ? "font-heading-mono mt-2 text-2xl font-normal tracking-tight text-neutral-950 group-hover:text-neutral-600" : "font-heading-mono mt-3 text-2xl font-normal tracking-tight group-hover:text-brand-700"}>{article.title}</Heading>
         {article.excerpt ? <p className={isRecent ? "mt-3 text-sm leading-6 text-neutral-700" : "mt-3 leading-7 text-slate-600"}>{article.excerpt}</p> : null}

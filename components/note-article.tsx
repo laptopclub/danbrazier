@@ -2,6 +2,7 @@ import { RichTextBlock, SanityImage, type ArticleData, type ImageConfig } from "
 import { formatArticleDate } from "../lib/article-date";
 import { SelectedNotes } from "./selected-notes";
 import { LinkedInVideo } from "./linkedin-video";
+import { ImageParallax } from "./image-parallax";
 
 export function NoteArticle({ article, imageConfig, slug, linkedinVideoActivityId }: { article: ArticleData; imageConfig: ImageConfig; slug: string; linkedinVideoActivityId?: string | null }) {
   const date = formatArticleDate(article.publishedAt);
@@ -17,11 +18,11 @@ export function NoteArticle({ article, imageConfig, slug, linkedinVideoActivityI
         </header>
       </div>
       <div className="mt-12 grid gap-16 sm:mt-16 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-        <div className={`-mx-6 min-w-0 [&_.prose_figure]:px-6 sm:[&_.prose_figure]:px-10 ${article.coverImage ? "" : "[&>section]:pt-0"}`}>
-          {article.coverImage ? <div className="px-6"><SanityImage className="aspect-[16/9] w-full rounded-3xl object-cover" config={imageConfig} image={article.coverImage} priority sizes="(min-width: 1024px) 700px, 100vw" /></div> : null}
-          <RichTextBlock block={{ _type: "richTextBlock", content: article.body, spacing: "standard", width: "narrow" }} imageConfig={imageConfig} />
+        <ImageParallax className={`-mx-6 min-w-0 [&_.prose_figure]:px-6 sm:[&_.prose_figure]:px-10 ${article.coverImage ? "" : "[&>div>section]:pt-0"}`}>
+          {article.coverImage ? <div className="px-6"><div className="overflow-hidden rounded-3xl" data-parallax-frame><SanityImage className="aspect-[16/9] w-full object-cover" config={imageConfig} image={article.coverImage} priority sizes="(min-width: 1024px) 700px, 100vw" /></div></div> : null}
+          <div data-parallax-body><RichTextBlock block={{ _type: "richTextBlock", content: article.body, spacing: "standard", width: "narrow" }} imageConfig={imageConfig} /></div>
           {linkedinVideoActivityId ? <LinkedInVideo activityId={linkedinVideoActivityId} /> : null}
-        </div>
+        </ImageParallax>
         <SelectedNotes currentSlug={slug} />
       </div>
     </article>
