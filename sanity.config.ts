@@ -2,6 +2,7 @@ import { visionTool } from "@sanity/vision";
 import { defineConfig, type Template } from "sanity";
 import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
+import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
 import { resolve } from "./sanity/presentation";
 import { siteSchemaTypes } from "./sanity/schema-types";
 import { structure } from "./sanity/structure";
@@ -26,7 +27,8 @@ export default defineConfig({
       },
       resolve
     }),
-    visionTool()
+    visionTool(),
+    unsplashImageAsset()
   ],
   projectId,
   schema: { types: siteSchemaTypes },
