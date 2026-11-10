@@ -13,8 +13,13 @@ test("notes images move with scrolling and honour reduced motion", async ({ page
     await image.scrollIntoViewIfNeeded();
     await expect.poll(() => image.evaluate((element) => element.style.transform)).toContain("translate3d");
     const initial = await image.evaluate((element) => element.style.transform);
-    await page.evaluate(() => window.scrollBy(0, 120));
+    await page.evaluate(() => window.scrollBy(0, 240));
     await expect.poll(() => image.evaluate((element) => element.style.transform)).not.toBe(initial);
+    if (path === "/notes") {
+      const travel = await image.evaluate((element, previous) => Math.abs(new DOMMatrix(element.style.transform).m42 - new DOMMatrix(previous).m42), initial);
+      expect(travel).toBeGreaterThan(5);
+      await expect(image).toHaveAttribute("style", /scale\(1\.25\)/);
+    }
 
     await page.emulateMedia({ reducedMotion: "reduce" });
     await expect.poll(() => image.evaluate((element) => element.style.transform)).toBe("");

@@ -25,8 +25,8 @@ export function ImageParallax({ children, className }: ImageParallaxProps) {
         const rect = anchor.getBoundingClientRect();
         if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
         const progress = Math.max(-1, Math.min(1, (window.innerHeight / 2 - (rect.top + rect.height / 2)) / ((window.innerHeight + rect.height) / 2)));
-        const distance = progress * (clipped ? 5 : 10);
-        image.style.transform = `translate3d(0, ${distance.toFixed(2)}px, 0)${clipped ? " scale(1.08)" : ""}`;
+        const distance = progress * (clipped ? Math.min(32, rect.height * 0.11) : 10);
+        image.style.transform = `translate3d(0, ${distance.toFixed(2)}px, 0)${clipped ? " scale(1.25)" : ""}`;
       }
     };
     const requestUpdate = () => { if (!frame) frame = window.requestAnimationFrame(update); };
