@@ -5,7 +5,7 @@ import { ArticleSearch } from "./article-search";
 const progressiveBlurSteps = [0.078125, 0.15625, 0.3125, 0.625, 1.25, 2.5, 5, 10] as const;
 
 function EdgeBlur({ edge }: { edge: "bottom" | "top" }) {
-  return <div aria-hidden="true" className={edge === "top" ? "pointer-events-none fixed inset-x-0 top-0 z-40 h-28" : "pointer-events-none fixed inset-x-0 bottom-0 z-40 h-28"}><div className="relative size-full">{progressiveBlurSteps.map((blur, index) => {
+  return <div aria-hidden="true" data-viewport-blur={edge} className={`pointer-events-none fixed inset-x-0 z-40 h-14 ${edge === "top" ? "top-0" : "bottom-0"}`}><div className="relative size-full">{progressiveBlurSteps.map((blur, index) => {
     const step = 100 / progressiveBlurSteps.length;
     const start = index * step;
     const maskImage = `linear-gradient(${edge === "top" ? "to top" : "to bottom"}, rgba(0,0,0,0) ${start}%, #000 ${(index + 1) * step}%, #000 ${Math.min((index + 2) * step, 100)}%, rgba(0,0,0,0) ${Math.min((index + 3) * step, 100)}%)`;
